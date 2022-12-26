@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
-import Comment from './Comment';
+import {CommentSchema} from './Comment';
+import {RatingSchema} from './Rating';
 
-export default Post = new mongoose.Schema({
+export const PostSchema = new mongoose.Schema({
     PID: {
         type: String,
         required: [true, "PID in Post is required"]
@@ -10,16 +11,19 @@ export default Post = new mongoose.Schema({
         type: String,
         required: [true, "UID in Post is required"]
     },
-    push: {
-        type: Number,
-        required: [true, "push in Post is required"]
+    rating: {
+        type: RatingSchema,
+        required: [true, "rating in Post is required"]
     },
     content: {
         type: String,
         required: [true, "content in Post is required"]
     },
     comments: {
-        type: [Comment],
+        type: [CommentSchema],
         required: [true, "comments in Post is required"]
     }
 });
+
+const PostModel = mongoose.model("Post", PostSchema);
+export default PostModel;
