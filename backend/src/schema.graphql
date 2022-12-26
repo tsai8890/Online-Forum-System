@@ -1,0 +1,68 @@
+type Query {
+    users: [User]
+    userByUID(UID: String!): User
+    userByUsername(username: String!): User
+
+    posts: [Post]
+    postByPID(PID: String!): Post
+    postsByUID(UID: String!): [Post]
+}
+
+type Mutation {
+    createUser(
+        username: String!, 
+        password: String!, 
+        nickname: String
+    ): User
+
+    createPost(
+        UID: String!,
+        content: String!
+    ): Post
+    
+    createComment(
+        PID: String!,
+        UID: String!,
+        comment: String!
+    ): Comment
+}
+
+type User {
+    UID: String!
+    username: String!
+    password: String
+    nickname: String!
+}
+
+type Post {
+    PID: String!
+    UID: String!
+    rating: Rating!
+    content: String!
+    comments: [Comment]!
+}
+
+type Comment {
+    CID: String!
+    UID: String!
+    message: String!
+    replies: [Reply]!
+    rating: Rating!
+}
+
+type Reply {
+    UID: String!
+    message: String!
+    rating: Rating!
+}
+
+type Rating {
+    push: RatingStat!
+    down: RatingStat!
+}
+
+type RatingStat {
+    total: Int!
+    stat: [String]!
+}
+

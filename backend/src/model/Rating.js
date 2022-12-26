@@ -1,24 +1,23 @@
 import mongoose from 'mongoose';
 
-const RatingStat = new mongoose.Schema({
+const RatingStatSchema = new mongoose.Schema({
     total: {
         type: Number,
         required: [true, "total in RatingStat is required"]
     },
     stat: {
-        type: Map,
-        of: String, // UID
+        type: [String], // UID
         required: [true, "stat in RatingStat is required"]
     }
 })
 
-export default Rating = new mongoose.Schema({
+export const RatingSchema = new mongoose.Schema({
     push: {
-        type: RatingStat,
+        type: RatingStatSchema,
         required: [true, "push in Rating is required"]
     },
     down: {
-        type: RatingStat,
+        type: RatingStatSchema,
         required: [true, "down in Rating is required"]
     }
 });

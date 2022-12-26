@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
-import Reply from './Reply';
+import {RatingSchema} from './Rating';
+import {ReplySchema} from './Reply';
 
-export default Comment = new mongoose.Schema({
+export const CommentSchema = new mongoose.Schema({
     CID: {
         type: String,
         required: [true, "CID in Comment is required"]
@@ -10,20 +11,16 @@ export default Comment = new mongoose.Schema({
         type: String,
         required: [true, "UID in Comment is required"]
     },
-    messages: {
-        type: [String],
-        required: [true, "messages in Comment is required"]
+    message: {
+        type: String,
+        required: [true, "message in Comment is required"]
     },
     replies: {
-        type: [Reply],
+        type: [ReplySchema],
         required: [true, "replies in Comment is required"]
     },
-    push: {
-        type: Number,
-        required: [true, "push in Comment is required"]
+    rating: {
+        type: RatingSchema,
+        required: [true, "rating in Comment is required"]
     },
-    down: {
-        type: Number,
-        required
-    }
 });
