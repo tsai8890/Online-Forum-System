@@ -1,4 +1,4 @@
-Web Programming Final Project
+# Web Programming Final Project
 
 ## Backend
 1. Run the backend server
