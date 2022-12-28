@@ -1,21 +1,30 @@
 import { createContext, useContext, useState } from 'react';
 
 const UserContext = createContext({
-    me: '',
-    setMe: () => {},
+    username: '',
+    setUsername: () => {},
+
+    nickname: '',
+    setNickname: () => {},
+
+    UID: '',
+    setUID: () => {},
 
     isLogin: false,
-    setIsLogin: () => {}
+    setIsLogin: () => {},
 });
 
 const UserProvider = (props) => {
+    const [username, setUsername] = useState('');
+    const [nickname, setNickname] = useState('');
+    const [UID, setUID] = useState('');
     const [isLogin, setIsLogin] = useState(false);
-    const [me, setMe] = useState('');
 
     return (
         <UserContext.Provider
             value={{
-                me, isLogin, setMe, setIsLogin,
+                username, nickname, UID, isLogin, 
+                setUsername, setNickname, setUID, setIsLogin
             }}
             {...props}
         />
