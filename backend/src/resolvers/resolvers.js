@@ -34,7 +34,7 @@ const resolvers = {
         postByPID: async (parent, args, contextValue, info) => {
             const {PostModel} = contextValue;
             const {PID} = args;
-            const posts = await PostModel.find({PID});
+            const posts = await PostModel.findOne({PID});
             return posts;
         },
         postsByUID: async (parent, args, contextValue, info) => {
