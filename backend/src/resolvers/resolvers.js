@@ -9,19 +9,19 @@ const resolvers = {
         // User Data
         users: async (parent, args, contextValue, info) => {
             const {UserModel} = contextValue;
-            const users = await UserModel.find({});
+            const users = await UserModel.find({}).select('-password');
             return users;
         },
         userByUID: async (parent, args, contextValue, info) => {
             const {UserModel} = contextValue;
             const {UID} = args;
-            const user = await UserModel.findOne({UID});
+            const user = await UserModel.findOne({UID}).select('-password');
             return user;
         },
         userByUsername: async (parent, args, contextValue, info) => {
             const {UserModel} = contextValue;
             const {username} = args;
-            const user = await UserModel.findOne({username});
+            const user = await UserModel.findOne({username}).select('-password');
             return user;
         },
 
@@ -51,13 +51,19 @@ const resolvers = {
         createUser: async (parent, args, contextValue, info) => {
             const {username, password, nickname} = args;
             if (!username || !password) {
-                return null;
+                return {
+                    success: false,
+                    msg: 'no username or password'
+                };
             }
 
             const {UserModel} = contextValue;
             const old = UserModel.findOne({username});
             if (!old) {
-                return null;
+                return {
+                    success: false,
+                    msg: 'user existed'
+                };
             }
             
             const hashed = bcrypt.hashSync(password, saltRounds);
@@ -66,12 +72,65 @@ const resolvers = {
                 username: username,
                 password: hashed,
                 nickname: (nickname) ? nickname : username
-            }).save();
-            return user;
+            }).save().select('-password');
+            
+            if (user) {
+                return {
+                    success: true,
+                    msg: 'successfully registered'
+                };
+            }
+            else {
+                return {
+                    success: false,
+                    msg: 'error: register unsuccessfully'
+                };
+            }
         },
+
+        // Login
+        login: async (parent, args, contextValue, info) => {
+            const {UserModel} = contextValue;
+            const {username, password} = args;
+
+            if (!username || !password) {
+                return {
+                    success: false,
+                    cookie: ''
+                }
+            }
+
+            const user = await UserModel.findOne({username});
+            if (!user) {
+                return {
+                    success: false,
+                    cookie: ''
+                }
+            }
+            
+            if (bcrypt.compareSync(password, user.password)) {
+                return {
+                    success: true,
+                    cookie: 'cookie'
+                }
+            }
+            else {
+                return {
+                    success: false,
+                    cookie: 'cookie'
+                }
+            }
+        },
+
         createPost: async (parent, args, contextValue, info) => {
-            const {UID, content} = args;
-            if (!UID || !content) {
+            const {UserModel} = contextValue;
+            const {UID, title, content} = args;
+            if (!UID || !title | !content) {
+                return null;
+            }
+
+            const user = await UserModel.findOne({UID});
+            if (!user) {
                 return null;
             }
 
@@ -79,6 +138,9 @@ const resolvers = {
             const post = await new PostModel({
                 PID: uuid(),
                 UID: UID,
+                title: title,
+                username: user.username,
+                nickname: user.nickname,
                 content: content, 
                 comments: [],
                 rating: {
@@ -91,12 +153,19 @@ const resolvers = {
                         stat: []
                     }
                 },
+                timestamp: new Date().getTime().toString(),
             }).save();
             return post;
         },
         createComment: async (parent, args, contextValue, info) => {
+            const {UserModel} = contextValue;
             const {PID, UID, comment} = args;
             if (!PID || !UID || !comment) {
+                return null;
+            }
+
+            const user = await UserModel.findOne({UID});
+            if (!user) {
                 return null;
             }
 
@@ -106,11 +175,11 @@ const resolvers = {
                 return null;
             }
 
-            console.log(post);
-
             const newComment = {
                 CID: uuid(),
                 UID: UID,
+                username: user.username,
+                nickname: user.nickname,
                 message: comment,
                 replies: [],
                 rating: {
@@ -123,6 +192,7 @@ const resolvers = {
                         stat: []
                     }
                 },
+                timestamp: new Date().getTime().toString(),
             };
             post.comments.push(newComment);
             await post.save(); 

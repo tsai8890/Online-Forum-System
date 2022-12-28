@@ -12,11 +12,14 @@ type Mutation {
     createUser(
         username: String!, 
         password: String!, 
-        nickname: String
-    ): User
+        nickname: String!
+    ): ApiResponse
+
+    login(username: String!, password: String!): ApiResponse
 
     createPost(
         UID: String!,
+        title: String!,
         content: String!
     ): Post
     
@@ -30,30 +33,41 @@ type Mutation {
 type User {
     UID: String!
     username: String!
-    password: String
+    password: String!
     nickname: String!
+    intro: String
 }
 
 type Post {
     PID: String!
     UID: String!
+    title: String!
+    username: String!
+    nickname: String!
     rating: Rating!
     content: String!
     comments: [Comment]!
+    timestamp: String!
 }
 
 type Comment {
     CID: String!
     UID: String!
+    username: String!
+    nickname: String!
     message: String!
     replies: [Reply]!
     rating: Rating!
+    timestamp: String!
 }
 
 type Reply {
     UID: String!
+    username: String!
+    nickname: String!
     message: String!
     rating: Rating!
+    timestamp: String!
 }
 
 type Rating {
@@ -65,4 +79,11 @@ type RatingStat {
     total: Int!
     stat: [String]!
 }
+
+type ApiResponse {
+    success: Boolean!
+    cookie: String
+    msg: String
+}
+
 
