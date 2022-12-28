@@ -9,19 +9,19 @@ const resolvers = {
         // User Data
         users: async (parent, args, contextValue, info) => {
             const {UserModel} = contextValue;
-            const users = await UserModel.find({});
+            const users = await UserModel.find({}).select('-password');
             return users;
         },
         userByUID: async (parent, args, contextValue, info) => {
             const {UserModel} = contextValue;
             const {UID} = args;
-            const user = await UserModel.findOne({UID});
+            const user = await UserModel.findOne({UID}).select('-password');
             return user;
         },
         userByUsername: async (parent, args, contextValue, info) => {
             const {UserModel} = contextValue;
             const {username} = args;
-            const user = await UserModel.findOne({username});
+            const user = await UserModel.findOne({username}).select('-password');
             return user;
         },
 
@@ -72,7 +72,7 @@ const resolvers = {
                 username: username,
                 password: hashed,
                 nickname: (nickname) ? nickname : username
-            }).save();
+            }).save().select('-password');
             
             if (user) {
                 return {
@@ -92,7 +92,7 @@ const resolvers = {
         login: async (parent, args, contextValue, info) => {
             const {UserModel} = contextValue;
             const {username, password} = args;
-            console.log(args);
+
             if (!username || !password) {
                 return {
                     success: false,
@@ -123,8 +123,14 @@ const resolvers = {
         },
 
         createPost: async (parent, args, contextValue, info) => {
+            const {UserModel} = contextValue;
             const {UID, content} = args;
             if (!UID || !content) {
+                return null;
+            }
+
+            const user = await UserModel.findOne({UID});
+            if (!user) {
                 return null;
             }
 
@@ -132,6 +138,8 @@ const resolvers = {
             const post = await new PostModel({
                 PID: uuid(),
                 UID: UID,
+                username: user.username,
+                nickname: user.nickname,
                 content: content, 
                 comments: [],
                 rating: {
@@ -144,12 +152,19 @@ const resolvers = {
                         stat: []
                     }
                 },
+                timestamp: new Date().getTime().toString(),
             }).save();
             return post;
         },
         createComment: async (parent, args, contextValue, info) => {
+            const {UserModel} = contextValue;
             const {PID, UID, comment} = args;
             if (!PID || !UID || !comment) {
+                return null;
+            }
+
+            const user = await UserModel.findOne({UID});
+            if (!user) {
                 return null;
             }
 
@@ -159,11 +174,11 @@ const resolvers = {
                 return null;
             }
 
-            console.log(post);
-
             const newComment = {
                 CID: uuid(),
                 UID: UID,
+                username: user.username,
+                nickname: user.nickname,
                 message: comment,
                 replies: [],
                 rating: {
@@ -176,6 +191,7 @@ const resolvers = {
                         stat: []
                     }
                 },
+                timestamp: new Date().getTime().toString(),
             };
             post.comments.push(newComment);
             await post.save(); 

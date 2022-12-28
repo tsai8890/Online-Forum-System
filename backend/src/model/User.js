@@ -17,6 +17,10 @@ export const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, "nickname in User is required"]
     },
+    intro: {
+        type: String,
+        required: [true, "intro in User is required"]
+    }
 });
 
 const UserModel = mongoose.model("User", UserSchema);
