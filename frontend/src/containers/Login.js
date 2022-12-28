@@ -33,7 +33,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 const Login = () => {
-    const {isLogin, setIsLogin, me, setMe} = useUser();
+    const {isLogin, setIsLogin, username, setUsername} = useUser();
     const [LOGIN] = useMutation(LOGIN_MUTATION);
     const navigate = useNavigate();
 
@@ -60,7 +60,7 @@ const Login = () => {
         });
 
         if (loginResponse.data.login.success) {
-            setMe(data.username);
+            setUsername(data.username);
             setIsLogin(true);
             navigate("/posts");
         }
