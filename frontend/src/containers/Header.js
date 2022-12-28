@@ -18,34 +18,42 @@ const useStyles = makeStyles(theme => {
             marginLeft: '80px'
         },
         searchBar: {
-            width: '400px',
+            width: '300px',
             height: '40px',
             marginLeft: '20px',
+            position: 'absolute',
+            left: '620px'
         },
         homeButton: {
             marginLeft: '2px'
         },
         profileButton: {
-            marginRight: '20px'
+            marginLeft: '25px'
         },
         navigation: {
             marginLeft: '-150px'
         },
         searchButton: {
             width: '50px',
+            position: 'absolute',
+            left: '940px'
         },
         registerButton: {
             width: '70px',
+            position: 'absolute',
+            left: '1070px'
         },
         loginButton: {
             width: '100px',
+            position: 'absolute',
+            left: '990px'
         }
     }
 })
 
 function Header(props) {
-    const {UID} = useUser();
-    const { sections, title } = props;
+    const {UID, isLogin} = useUser();
+    const { title } = props;
     const classes = useStyles();
     const navigate = useNavigate();
 
@@ -67,9 +75,8 @@ function Header(props) {
                         variant="h4"
                         align="center"
                         noWrap
-                        sx={{ flex: 1 }}
                     >
-                        {title}
+                        <Link color="primary" href="/posts" underline="none">{title}</Link>
                     </Typography>
                 </Grid>
 
@@ -83,8 +90,45 @@ function Header(props) {
                     </Link>
                 </Grid>
 
+                {isLogin && 
+                    <>
+                        <Grid className={classes.profileButton}>
+                            <Link
+                                color="inherit"
+                                variant="body2"
+                                href={`/profile/${UID}`}
+                            >
+                                Profile
+                            </Link>
+                        </Grid>
+                        <Grid className={classes.profileButton}>
+                            <Link
+                                color="inherit"
+                                variant="body2"
+                                href={`/profile/${UID}`}
+                            >
+                                Followings
+                            </Link>
+                        </Grid>
+                    </>
+                }
+
+                {!isLogin && 
+                    <>
+                        <Grid className={classes.profileButton}>
+                            <Link
+                                color="inherit"
+                                variant="body2"
+                                href={`/profile/${UID}`}
+                            >
+                                Sponsor
+                            </Link>
+                        </Grid>
+                    </>
+                }
+
                 <Grid className={classes.searchBar}>             
-                    <TextField size="small" sx={{ width: 400}}>
+                    <TextField size="small" sx={{ width: 300 }}>
                     </TextField>
                 </Grid>  
 
@@ -93,50 +137,23 @@ function Header(props) {
                         <SearchIcon />
                     </IconButton>
                 </Grid>
-
-                <Grid className={classes.profileButton}>
-                    <Link
-                        color="inherit"
-                        variant="body2"
-                        href={`/profile/${UID}`}
-                        
-                    >
-                        Profile
-                    </Link>
-                </Grid>
                 
-                <Grid className={classes.registerButton}>
-                    <Button variant="outlined" size="small" onClick={handleLogin}>
-                        Login
-                    </Button>
-                </Grid>
+                {!isLogin && 
+                    <>
+                        <Grid className={classes.loginButton}>
+                            <Button variant="outlined" size="small" onClick={handleLogin}>
+                                Login
+                            </Button>
+                        </Grid>
 
-                <Grid className={classes.loginButton}>
-                    <Button variant="outlined" size="small" onClick={handleRegister}>
-                        Register
-                    </Button>
-                </Grid>
-
+                        <Grid className={classes.registerButton}>
+                            <Button variant="outlined" size="small" onClick={handleRegister}>
+                                Register
+                            </Button>
+                        </Grid>
+                    </>
+                }
             </Toolbar>
-            
-            {/* <Toolbar
-                component="nav"
-                variant="dense"
-                sx={{ justifyContent: 'space-between', overflowX: 'auto' }}
-            >
-                {sections.map((section) => (
-                    <Link
-                        color="inherit"
-                        noWrap
-                        key={section.title}
-                        variant="body2"
-                        href={section.url}
-                        sx={{ p: 1, flexShrink: 0 }}
-                    >
-                        {section.title}
-                    </Link>
-                ))}
-            </Toolbar> */}
         </>
     );
 }
