@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import Grid from '@mui/material/Grid';
 
 import { POSTS_QUERY } from '../graphql';
-import FeaturedPost from '../components/FeaturedPost';
+import PostItem from '../components/PostItem';
 
 const Posts = () => {
     const navigate = useNavigate();
@@ -21,7 +21,7 @@ const Posts = () => {
                 alignItems="center"
             >
                 {posts.map((post, index) =>
-                    <FeaturedPost 
+                    <PostItem 
                         key={post.PID} 
                         post={post} 
                         onClick={() => navigate(`/post/${post.PID}`)} 

@@ -20,7 +20,7 @@ const trim = (content, limit) => {
 }
 
 /* Ref. https://github.com/mui/material-ui/blob/v5.11.2/docs/data/material/getting-started/templates/blog/FeaturedPost.js */
-const FeaturedPost = ({ post, onClick}) => {
+const PostItem = ({ post, onClick}) => {
 	let { title, username, nickname, content } = post
 
 	content = trim(content, 40);
@@ -46,4 +46,4 @@ const FeaturedPost = ({ post, onClick}) => {
 	);
 }
 
-export default FeaturedPost;
+export default PostItem;

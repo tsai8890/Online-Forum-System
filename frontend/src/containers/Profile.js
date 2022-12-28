@@ -4,8 +4,8 @@ import { useQuery } from '@apollo/client';
 import Grid from '@mui/material/Grid';
 
 import { POSTS_BY_UID_QUERY, USER_BY_UID_QUERY } from '../graphql';
-import FeaturedPost from '../components/FeaturedPost';
-import UserInfo from '../components/MainFeaturedPost';
+import PostItem from '../components/PostItem';
+import UserInfo from '../components/UserInfo';
 
 const Profile = () => {
     const { id: UID } = useParams();
@@ -24,11 +24,11 @@ const Profile = () => {
     });
 
 
-    const { postsByUID: posts } = postsLoading || !postsData 
+    const { postsByUID: posts } = postsLoading
         ? { postsByUID: [] } 
         : postsData;
 
-    const { userByUID: user } = userLoading || !userData
+    const { userByUID: user } = userLoading
         ? { userByUID: [] }
         : userData;
 
@@ -40,7 +40,7 @@ const Profile = () => {
                 alignItems="center"
             >
                 {posts.map((post, index) =>
-                    <FeaturedPost 
+                    <PostItem 
                         key={post.PID} 
                         post={post} 
                         onClick={() => navigate(`/post/${post.PID}`)} 
