@@ -13,7 +13,9 @@ type Mutation {
         username: String!, 
         password: String!, 
         nickname: String
-    ): User
+    ): ApiResponse
+
+    login(username: String!, password: String!): ApiResponse
 
     createPost(
         UID: String!,
@@ -65,4 +67,11 @@ type RatingStat {
     total: Int!
     stat: [String]!
 }
+
+type ApiResponse {
+    success: Boolean!
+    cookie: String
+    msg: String
+}
+
 

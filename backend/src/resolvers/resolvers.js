@@ -51,13 +51,19 @@ const resolvers = {
         createUser: async (parent, args, contextValue, info) => {
             const {username, password, nickname} = args;
             if (!username || !password) {
-                return null;
+                return {
+                    success: false,
+                    msg: 'no username or password'
+                };
             }
 
             const {UserModel} = contextValue;
             const old = UserModel.findOne({username});
             if (!old) {
-                return null;
+                return {
+                    success: false,
+                    msg: 'user existed'
+                };
             }
             
             const hashed = bcrypt.hashSync(password, saltRounds);
@@ -67,8 +73,55 @@ const resolvers = {
                 password: hashed,
                 nickname: (nickname) ? nickname : username
             }).save();
-            return user;
+            
+            if (user) {
+                return {
+                    success: true,
+                    msg: 'successfully registered'
+                };
+            }
+            else {
+                return {
+                    success: false,
+                    msg: 'error: register unsuccessfully'
+                };
+            }
         },
+
+        // Login
+        login: async (parent, args, contextValue, info) => {
+            const {UserModel} = contextValue;
+            const {username, password} = args;
+            console.log(args);
+            if (!username || !password) {
+                return {
+                    success: false,
+                    cookie: ''
+                }
+            }
+
+            const user = await UserModel.findOne({username});
+            if (!user) {
+                return {
+                    success: false,
+                    cookie: ''
+                }
+            }
+            
+            if (bcrypt.compareSync(password, user.password)) {
+                return {
+                    success: true,
+                    cookie: 'cookie'
+                }
+            }
+            else {
+                return {
+                    success: false,
+                    cookie: 'cookie'
+                }
+            }
+        },
+
         createPost: async (parent, args, contextValue, info) => {
             const {UID, content} = args;
             if (!UID || !content) {
