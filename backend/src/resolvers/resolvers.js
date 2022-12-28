@@ -124,8 +124,8 @@ const resolvers = {
 
         createPost: async (parent, args, contextValue, info) => {
             const {UserModel} = contextValue;
-            const {UID, content} = args;
-            if (!UID || !content) {
+            const {UID, title, content} = args;
+            if (!UID || !title | !content) {
                 return null;
             }
 
@@ -138,6 +138,7 @@ const resolvers = {
             const post = await new PostModel({
                 PID: uuid(),
                 UID: UID,
+                title: title,
                 username: user.username,
                 nickname: user.nickname,
                 content: content, 

@@ -11,6 +11,10 @@ export const PostSchema = new mongoose.Schema({
         type: String,
         required: [true, "UID in Post is required"]
     },
+    title: {
+        type: String,
+        required: [true, "title in Post is required"]
+    },
     username: {
         type: String,
         required: [true, "username in Post is required"]
