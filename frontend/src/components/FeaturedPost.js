@@ -21,7 +21,7 @@ const trim = (content, limit) => {
 
 /* Ref. https://github.com/mui/material-ui/blob/v5.11.2/docs/data/material/getting-started/templates/blog/FeaturedPost.js */
 const FeaturedPost = ({ post, onClick}) => {
-	let { title, username, content } = post
+	let { title, username, nickname, content } = post
 
 	content = trim(content, 40);
 
@@ -31,10 +31,10 @@ const FeaturedPost = ({ post, onClick}) => {
 				<Card sx={{ display: 'flex' }}>
 					<CardContent sx={{ flex: 1 }}>
 						<Typography component="h2" variant="h5">
-							{title ?? "No title"}
+							{title}
 						</Typography>
 						<Typography variant="subtitle1" color="text.secondary">
-							{username ?? "Anonymous"}
+							{`${nickname} @${username}`}
 						</Typography>
 						<Typography variant="subtitle1" color="text.secondary">
 							{content}

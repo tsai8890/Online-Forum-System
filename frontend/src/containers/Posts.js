@@ -10,7 +10,8 @@ const Posts = () => {
 
     const {
         loading, error, data: postsData
-    } = useQuery(POSTS_QUERY)
+    } = useQuery(POSTS_QUERY);
+
     const { posts } = loading ? { posts: [] } : postsData;
 
     return (

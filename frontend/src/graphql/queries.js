@@ -6,6 +6,7 @@ export const USERS_QUERY = gql`
             UID
             username
             nickname
+            intro
         }
     }
 `
@@ -16,6 +17,7 @@ export const USER_BY_UID_QUERY = gql`
             UID
             username
             nickname
+            intro
         }
     }
 `
@@ -26,6 +28,7 @@ export const USER_BY_USERNAME_QUERY = gql`
             UID
             username
             nickname
+            intro
         }
     }
 `
@@ -35,9 +38,14 @@ export const POSTS_QUERY = gql`
         posts {
             PID
             UID
+            title
+            username
+            nickname
             comments {
                 CID
                 UID
+                username
+                nickname
                 message
                 rating {
                     down {
@@ -51,6 +59,8 @@ export const POSTS_QUERY = gql`
                 }
                 replies {
                     UID
+                    username
+                    nickname
                     message
                     rating {
                         down {
@@ -62,7 +72,9 @@ export const POSTS_QUERY = gql`
                             total
                         }
                     }
+                    timestamp
                 }
+                timestamp
             }
             content
             rating {
@@ -75,6 +87,7 @@ export const POSTS_QUERY = gql`
                     total
                 }
             }
+            timestamp
         }
     }
 `
@@ -84,9 +97,14 @@ export const POST_BY_PID_QUERY = gql`
         postByPID {
             PID
             UID
+            title
+            username
+            nickname
             comments {
                 CID
                 UID
+                username
+                nickname
                 message
                 rating {
                     down {
@@ -100,6 +118,8 @@ export const POST_BY_PID_QUERY = gql`
                 }
                 replies {
                     UID
+                    username
+                    nickname
                     message
                     rating {
                         down {
@@ -111,7 +131,9 @@ export const POST_BY_PID_QUERY = gql`
                             total
                         }
                     }
+                    timestamp
                 }
+                timestamp
             }
             content
             rating {
@@ -124,6 +146,7 @@ export const POST_BY_PID_QUERY = gql`
                     total
                 }
             }
+            timestamp
         }
     }
 `
@@ -133,9 +156,14 @@ export const POSTS_BY_UID_QUERY = gql`
         postsByUID {
             PID
             UID
+            title
+            username
+            nickname
             comments {
                 CID
                 UID
+                username
+                nickname
                 message
                 rating {
                     down {
@@ -149,6 +177,8 @@ export const POSTS_BY_UID_QUERY = gql`
                 }
                 replies {
                     UID
+                    username
+                    nickname
                     message
                     rating {
                         down {
@@ -160,7 +190,9 @@ export const POSTS_BY_UID_QUERY = gql`
                             total
                         }
                     }
+                    timestamp
                 }
+                timestamp
             }
             content
             rating {
@@ -173,6 +205,7 @@ export const POSTS_BY_UID_QUERY = gql`
                     total
                 }
             }
+            timestamp
         }
     }
 `
