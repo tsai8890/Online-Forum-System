@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@apollo/client';
 import Grid from '@mui/material/Grid';
 
