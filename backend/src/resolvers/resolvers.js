@@ -58,8 +58,8 @@ const resolvers = {
             }
 
             const {UserModel} = contextValue;
-            const old = UserModel.findOne({username});
-            if (!old) {
+            const old = await UserModel.findOne({username});
+            if (old) {
                 return {
                     success: false,
                     msg: 'user existed'
@@ -72,7 +72,7 @@ const resolvers = {
                 username: username,
                 password: hashed,
                 nickname: (nickname) ? nickname : username
-            }).save().select('-password');
+            }).save();
             
             if (user) {
                 return {

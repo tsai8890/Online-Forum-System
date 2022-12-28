@@ -19,7 +19,7 @@ export const UserSchema = new mongoose.Schema({
     },
     intro: {
         type: String,
-        required: [true, "intro in User is required"]
+        required: [false, "intro in User is optional"]
     }
 });
 
