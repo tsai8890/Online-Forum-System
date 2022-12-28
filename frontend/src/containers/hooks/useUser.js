@@ -5,17 +5,21 @@ const UserContext = createContext({
     setMe: () => {},
 
     isLogin: false,
-    setIsLogin: () => {}
+    setIsLogin: () => {},
+
+    UID: '',
+    setUID: () => {}
 });
 
 const UserProvider = (props) => {
     const [isLogin, setIsLogin] = useState(false);
     const [me, setMe] = useState('');
+    const [UID, setUID] = useState('');
 
     return (
         <UserContext.Provider
             value={{
-                me, isLogin, setMe, setIsLogin,
+                me, isLogin, setMe, setIsLogin, UID, setUID
             }}
             {...props}
         />
