@@ -13,9 +13,11 @@ import CreatePost from './containers/CreatePost';
 import UserPost from './containers/UserPost';
 import Profile from './containers/Profile';
 
+import { UserProvider } from './containers/hooks/useUser';
+
 function App() {
   return (
-    <>
+    <UserProvider>
       <CssBaseline />
       <BrowserRouter>
         <Routes>
@@ -30,7 +32,7 @@ function App() {
           <Route path="*" element={<h1>Error, Page Not Found</h1>} />
         </Routes>
       </BrowserRouter>
-    </>
+    </UserProvider>
   );
 }
 

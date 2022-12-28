@@ -2,7 +2,10 @@ import { createContext, useContext, useState } from 'react';
 
 const UserContext = createContext({
     me: '',
-    signedIn: false,
+    setMe: () => {},
+
+    isLogin: false,
+    setIsLogin: () => {}
 });
 
 const UserProvider = (props) => {
@@ -17,9 +20,7 @@ const UserProvider = (props) => {
             {...props}
         />
     )
-    
 }
 
 const useUser = () => useContext(UserContext);
-
 export { UserProvider, useUser };
