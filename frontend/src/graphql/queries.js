@@ -93,8 +93,8 @@ export const POSTS_QUERY = gql`
 `
 
 export const POST_BY_PID_QUERY = gql`
-    query postByPID {
-        postByPID {
+    query postByPID($PID: String!) {
+        postByPID(PID: $PID) {
             PID
             UID
             title
@@ -152,8 +152,8 @@ export const POST_BY_PID_QUERY = gql`
 `
 
 export const POSTS_BY_UID_QUERY = gql`
-    query postsByUID {
-        postsByUID {
+    query postsByUID($UID: String!) {
+        postsByUID(UID: $UID) {
             PID
             UID
             title
