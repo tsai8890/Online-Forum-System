@@ -10,7 +10,7 @@ import Register from './containers/register';
 import Posts from './containers/Posts';
 import Post from './containers/Post';
 import CreatePost from './containers/CreatePost';
-import UserPost from './containers/UserPost';
+import UserPost from './containers/UserPosts';
 import Profile from './containers/Profile';
 
 import { UserProvider } from './containers/hooks/useUser';
@@ -44,7 +44,7 @@ function App() {
           <Route path="/posts" element={<Posts />}/>
           <Route path="/post/:id" element={<Post />} />
           <Route path="/createpost" element={<CreatePost />} />
-          <Route path="/userposts/:id" element={<UserPost />} />
+          <Route path="/posts/:id" element={<UserPost />} />
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/" element={<Posts />} />
           <Route path="*" element={<h1>Error, Page Not Found</h1>} />
