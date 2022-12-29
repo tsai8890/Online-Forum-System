@@ -65,7 +65,6 @@ const Login = () => {
         });
         
         const fetchData = loginResponse.data.login;
-        console.log(fetchData);
         if (fetchData.success) {
             setUsername(fetchData.username);
             setNickname(fetchData.nickname);
