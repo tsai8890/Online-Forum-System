@@ -128,6 +128,7 @@ const resolvers = {
         createPost: async (parent, args, contextValue, info) => {
             const {UserModel} = contextValue;
             const {UID, title, content} = args;
+            console.log(args);
             if (!UID || !title | !content) {
                 return null;
             }
