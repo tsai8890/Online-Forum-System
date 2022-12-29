@@ -68,8 +68,6 @@ function Header(props) {
     return (
         <>
             <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                {/* <Button size="small">Subscribe</Button> */}
-                
                 <Grid className={classes.title}>
                     <Typography
                         variant="h4"
@@ -152,14 +150,24 @@ function Header(props) {
                 {!isLogin && 
                     <>
                         <Grid className={classes.loginButton}>
-                            <Button variant="outlined" size="small" onClick={handleLogin}>
-                                Login
+                            <Button 
+                                variant="contained"
+                                color="info"
+                                size="small" 
+                                onClick={handleLogin}
+                            >
+                                Log in
                             </Button>
                         </Grid>
 
                         <Grid className={classes.registerButton}>
-                            <Button variant="outlined" size="small" onClick={handleRegister}>
-                                Register
+                            <Button 
+                                variant="contained" 
+                                size="small" 
+                                onClick={handleRegister}
+                                sx={{width: "80px"}}
+                            >
+                                Sign up
                             </Button>
                         </Grid>
                     </>
