@@ -1,11 +1,22 @@
-import { useNavigate } from 'react-router-dom'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/client';
 import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button'
 
 import { POSTS_BY_UID_QUERY, USER_BY_UID_QUERY } from '../graphql';
 import PostItem from '../components/PostItem';
 import UserInfo from '../components/UserInfo';
+
+const sortPosts = (posts) => {
+    let sortPosts = JSON.parse(JSON.stringify(posts));
+    sortPosts.sort((postA, postB) => {
+        if (postA.rating.push.total != postB.rating.push.total)
+            return postA.rating.push.total > postB.rating.push.total ? 1 : -1;
+        else
+            return parseInt(postA.timestamp) < parseInt(postB.timestamp) ? 1 : -1;
+    })
+    return sortPosts;
+}
 
 const Profile = () => {
     const { id: UID } = useParams();
@@ -24,9 +35,11 @@ const Profile = () => {
     });
 
 
-    const { postsByUID: posts } = postsLoading
+    let { postsByUID: posts } = postsLoading
         ? { postsByUID: [] } 
         : postsData;
+
+    posts = sortPosts(posts).slice(0, 3);
 
     const { userByUID: user } = userLoading
         ? { userByUID: [] }
@@ -46,6 +59,16 @@ const Profile = () => {
                         onClick={() => navigate(`/post/${post.PID}`)} 
                     />
                 )}
+            </Grid>
+            <Grid container
+                justifyContent="center"
+                sx={{
+                    margin: "20px"
+                }}
+            >
+                <Button variant="outlined" onClick={() => navigate(`/posts/${UID}`)} >
+                    More
+                </Button>
             </Grid>
         </>
     )
