@@ -33,7 +33,12 @@ function Copyright(props) {
 const theme = createTheme();
 
 const Login = () => {
-    const {isLogin, setIsLogin, username, setUsername} = useUser();
+    const {
+        isLogin, setIsLogin, 
+        username, setUsername,
+        nickname, setNickname,
+        UID, setUID,
+    } = useUser();
     const [LOGIN] = useMutation(LOGIN_MUTATION);
     const navigate = useNavigate();
 
@@ -58,9 +63,13 @@ const Login = () => {
                 password: data.get('password')
             }
         });
-
-        if (loginResponse.data.login.success) {
-            setUsername(data.username);
+        
+        const fetchData = loginResponse.data.login;
+        console.log(fetchData);
+        if (fetchData.success) {
+            setUsername(fetchData.username);
+            setNickname(fetchData.nickname);
+            setUID(fetchData.UID);
             setIsLogin(true);
             navigate("/posts");
         }
