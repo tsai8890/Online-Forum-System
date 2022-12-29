@@ -21,8 +21,8 @@ export const LOGIN_MUTATION = gql`
 `
 
 export const CREATE_POST_MUTATION = gql`
-    mutation createPost($UID: String!, $content: String!) {
-        createPost(UID: $UID, content: $content) {
+    mutation createPost($UID: String!, $title: String!, $content: String!) {
+        createPost(UID: $UID, title: $title, content: $content) {
             PID
             UID
             title
