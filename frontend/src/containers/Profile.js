@@ -39,7 +39,7 @@ const Profile = () => {
                 justifyContent="center"
                 alignItems="center"
             >
-                {posts.map((post, index) =>
+                {posts.map((post) =>
                     <PostItem 
                         key={post.PID} 
                         post={post} 
