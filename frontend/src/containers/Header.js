@@ -76,7 +76,14 @@ function Header(props) {
                         align="center"
                         noWrap
                     >
-                        <Link color="primary" href="/posts" underline="none">{title}</Link>
+                        <Link 
+                            color="primary"
+                            underline="none"
+                            sx={{cursor: 'pointer'}}
+                            onClick={()=>navigate(`/posts`)}
+                        >
+                            {title}
+                        </Link>
                     </Typography>
                 </Grid>
 
@@ -84,7 +91,8 @@ function Header(props) {
                     <Link
                         color="inherit"
                         variant="body2"
-                        href="/posts"
+                        sx={{cursor: 'pointer'}}
+                        onClick={()=>navigate(`/posts`)}
                     >
                         Home
                     </Link>
@@ -96,7 +104,8 @@ function Header(props) {
                             <Link
                                 color="inherit"
                                 variant="body2"
-                                href={`/profile/${UID}`}
+                                sx={{cursor: 'pointer'}}
+                                onClick={()=>navigate(`/profile/${UID}`)}
                             >
                                 Profile
                             </Link>
@@ -105,7 +114,8 @@ function Header(props) {
                             <Link
                                 color="inherit"
                                 variant="body2"
-                                href={`/profile/${UID}`}
+                                sx={{cursor: 'pointer'}}
+                                onClick={()=>navigate(`/profile/${UID}`)}
                             >
                                 Followings
                             </Link>
@@ -119,7 +129,8 @@ function Header(props) {
                             <Link
                                 color="inherit"
                                 variant="body2"
-                                href={`/profile/${UID}`}
+                                sx={{cursor: 'pointer'}}
+                                onClick={()=>navigate(`/profile/${UID}`)}
                             >
                                 Sponsor
                             </Link>
