@@ -111,7 +111,10 @@ const resolvers = {
             if (bcrypt.compareSync(password, user.password)) {
                 return {
                     success: true,
-                    cookie: 'cookie'
+                    cookie: 'cookie',
+                    UID: user.UID,
+                    username: user.username,
+                    nickname: user.nickname
                 }
             }
             else {
