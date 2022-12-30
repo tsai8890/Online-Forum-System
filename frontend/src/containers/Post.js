@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/client';
 
 import { CREATE_COMMENT_MUTATION, POST_BY_PID_QUERY } from '../graphql';
@@ -11,13 +11,20 @@ const Post = () => {
     const { id: PID } = useParams();
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
-    const { nickname, UID, isLogin } = useUser();
+    const { nickname, UID, isLogin, setStatus } = useUser();
+
+    const navigate = useNavigate();
 
     const [createComment] = useMutation(CREATE_COMMENT_MUTATION);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (!isLogin || !comment) {
+            setStatus({
+                type: "error",
+                msg: "You should login first"
+            });
+            navigate("/login");
             return;
         }
 
