@@ -34,16 +34,25 @@ const PostRender = ({ post, comment: myComment, comments, setComment, handleSubm
                     component="h1"
                     variant="h2"
                     color="text.primary"
-                    gutterBottom
                 >
                     {title}
                 </Typography>
                 <Typography variant="p" color="text.secondary">
                     {`${date} by ${nickname}`}
                 </Typography>
-                <Typography variant="p" color="#423c3c" paragraph>
-                    {content}
-                </Typography>
+                <Divider 
+                    variant="fullWidth" 
+                    sx={{ 
+                        marginTop: "10px",
+                        marginBottom: "10px",
+                        bgcolor: "silver"
+                    }} 
+                />
+                <Box component="div" paddingBottom={20}>
+                    <Typography variant="h5" color="#423c3c" paragraph>
+                        {content}
+                    </Typography>
+                </Box>
                 <Box
                     component="form"
                     sx={{
@@ -78,12 +87,12 @@ const PostRender = ({ post, comment: myComment, comments, setComment, handleSubm
                         </Button>
                     </Stack>
                 </Box>
-                <br />
-                <Divider variant="middle" />
-                <br />
                 <Grid container spacing={1} 
                     justifyContent="center"
                     alignItems="center"
+                    sx={{
+                        marginTop: "10px"
+                    }}
                 >
                     {comments.map((comment) =>
                         <CommentItem 
