@@ -7,6 +7,14 @@ import PostItem from '../components/PostItem';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 
+const sortPosts = (posts) => {
+    let sortPosts = JSON.parse(JSON.stringify(posts));
+    sortPosts.sort((postA, postB) => {
+        return parseInt(postA.timestamp) < parseInt(postB.timestamp) ? 1 : -1;
+    })
+    return sortPosts;
+}
+
 const UserPosts = () => {
     const navigate = useNavigate();
     const { id: UID } = useParams();
@@ -27,8 +35,10 @@ const UserPosts = () => {
         }
     });
 
-    const { postsByUID: posts } = postLoading ? { postsByUID: [] } : postsData;
+    let { postsByUID: posts } = postLoading ? { postsByUID: [] } : postsData;
     const { userByUID: user } = userLoading ? { userByUID: [] } : userData;
+
+    posts = sortPosts(posts);
 
     return (
         <>
