@@ -5,6 +5,7 @@ export {
     POSTS_QUERY,
     POST_BY_PID_QUERY,
     POSTS_BY_UID_QUERY,
+    POSTS_BY_TITLE_REGEX_QUERY,
 } from './queries'
 
 export {

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from "react";
 import PropTypes from 'prop-types';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
@@ -10,6 +11,7 @@ import { makeStyles } from '@mui/styles';
 import { Grid, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from './hooks/useUser';
+import { createRef } from 'react';
 
 const useStyles = makeStyles(theme => {
     return {
@@ -56,6 +58,9 @@ function Header(props) {
     const { title } = props;
     const classes = useStyles();
     const navigate = useNavigate();
+
+    const [searchVal, setSearchVal] = useState('');
+    const searchButtonRef = createRef();
 
     const handleRegister = () => {
         navigate('/register');
@@ -137,12 +142,26 @@ function Header(props) {
                 }
 
                 <Grid className={classes.searchBar}>             
-                    <TextField size="small" sx={{ width: 300 }}>
+                    <TextField 
+                        size="small" 
+                        value={searchVal}
+                        onChange={(e) => setSearchVal(e.target.value)}
+                        sx={{ width: 300 }}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter')
+                                searchButtonRef.current.click();
+                        }}
+                    >
                     </TextField>
                 </Grid>  
 
                 <Grid className={classes.searchButton}>
-                    <IconButton>
+                    <IconButton onClick={() => navigate({
+                        pathname: '/search',
+                        search: `?q=${searchVal}`
+                    })}
+                        ref={searchButtonRef}
+                    >
                         <SearchIcon />
                     </IconButton>
                 </Grid>

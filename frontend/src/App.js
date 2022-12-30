@@ -15,6 +15,7 @@ import Profile from './containers/Profile';
 
 import { UserProvider } from './containers/hooks/useUser';
 import Header from './containers/Header';
+import Search from './containers/Search';
 
 const sections = [
 	{ title: 'Home', url: '/posts' },
@@ -46,6 +47,7 @@ function App() {
           <Route path="/createpost" element={<CreatePost />} />
           <Route path="/posts/:id" element={<UserPost />} />
           <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/search" element={<Search />} />
           <Route path="/" element={<Posts />} />
           <Route path="*" element={<h1>Error, Page Not Found</h1>} />
         </Routes>
