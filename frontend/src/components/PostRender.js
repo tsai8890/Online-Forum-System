@@ -49,7 +49,7 @@ const PostRender = ({ post, comment: myComment, comments, setComment, handleSubm
                     }} 
                 />
                 <Box component="div" paddingBottom={20}>
-                    <Typography variant="h5" color="#423c3c" paragraph>
+                    <Typography variant="h5" color="#423c3c" paragraph sx={{whiteSpace: "pre"}}>
                         {content}
                     </Typography>
                 </Box>
