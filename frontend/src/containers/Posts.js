@@ -18,11 +18,14 @@ const Posts = () => {
 
     return (
         <>
-            <Grid container justifyContent="center" wrap="nowrap">
-                <Grid container item justifyContent="flex-start"
+            <Grid container 
+                justifyContent="center" 
+                wrap="nowrap"
+            >
+                <Grid container item
+                    justifyContent="space-between"
+                    xs={7}
                     sx={{
-                        width: "730px", 
-                        maxWidth: "730px", 
                         margin: "20px", 
                     }}
                 >
@@ -32,7 +35,7 @@ const Posts = () => {
                         </Typography>
                     </Grid>
 
-                    <Grid conatiner item sx={{marginLeft: "70%"}}>
+                    <Grid item>
                         <Button variant="outlined" onClick={()=>navigate("/createPost")}>
                             Write 
                         </Button>
