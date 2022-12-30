@@ -43,6 +43,15 @@ const resolvers = {
             const posts = await PostModel.find({UID});
             return posts;
         },
+        postsByTitleRegex: async (parent, args, contextValue, info) => {
+            const {PostModel} = contextValue;
+            const {title} = args;
+            const posts = await PostModel.find({'title': {
+                '$regex': title,
+                '$options': 'i'
+            }})
+            return posts;
+        }
     },
 
     

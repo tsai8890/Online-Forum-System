@@ -6,6 +6,7 @@ type Query {
     posts: [Post]
     postByPID(PID: String!): Post
     postsByUID(UID: String!): [Post]
+    postsByTitleRegex(title: String!): [Post]
 }
 
 type Mutation {

@@ -209,3 +209,62 @@ export const POSTS_BY_UID_QUERY = gql`
         }
     }
 `
+
+export const POSTS_BY_TITLE_REGEX_QUERY = gql`
+    query postsByTitleRegex($title: String!) {
+        postsByTitleRegex(title: $title) {
+            PID
+            UID
+            title
+            username
+            nickname
+            comments {
+                CID
+                UID
+                username
+                nickname
+                message
+                rating {
+                    down {
+                        stat
+                        total
+                    }
+                    push {
+                        stat
+                        total
+                    }
+                }
+                replies {
+                    UID
+                    username
+                    nickname
+                    message
+                    rating {
+                        down {
+                            stat
+                            total
+                        }
+                        push {
+                            stat
+                            total
+                        }
+                    }
+                    timestamp
+                }
+                timestamp
+            }
+            content
+            rating {
+                down {
+                    total
+                    stat
+                }
+                push {
+                    stat
+                    total
+                }
+            }
+            timestamp
+        }
+    }
+`
