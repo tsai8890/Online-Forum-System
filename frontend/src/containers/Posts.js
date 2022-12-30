@@ -5,7 +5,14 @@ import Grid from '@mui/material/Grid';
 import { POSTS_QUERY } from '../graphql';
 import PostItem from '../components/PostItem';
 import { Button, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+
+const sortPosts = (posts) => {
+    let sortPosts = JSON.parse(JSON.stringify(posts));
+    sortPosts.sort((postA, postB) => {
+        return parseInt(postA.timestamp) < parseInt(postB.timestamp) ? 1 : -1;
+    })
+    return sortPosts;
+}
 
 const Posts = () => {
     const navigate = useNavigate();
@@ -14,7 +21,9 @@ const Posts = () => {
         loading, error, data: postsData
     } = useQuery(POSTS_QUERY);
 
-    const { posts } = loading ? { posts: [] } : postsData;
+    let { posts } = loading ? { posts: [] } : postsData;
+
+    posts = sortPosts(posts);
 
     return (
         <>
