@@ -16,7 +16,7 @@ const CommentItem = ({ comment }) => {
 		<Grid item xs={12}>
             <Stack direction="row" spacing={1}>
                 <Chip icon={<FaceIcon />} label={nickname} variant="outlined" />
-                <Typography variant="p" color="text.secondary" paragraph style={{ wordWrap: "break-word" }}>
+                <Typography variant="p" color="text.secondary" paragraph style={{ wordWrap: "break-word" }} alignSelf="center">
                     {message}
                 </Typography>
             </Stack>
