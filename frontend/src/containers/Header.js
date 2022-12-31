@@ -8,7 +8,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import { makeStyles } from '@mui/styles';
-import { Grid, TextField } from '@mui/material';
+import { Avatar, Divider, Grid, Stack, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from './hooks/useUser';
 import { createRef } from 'react';
@@ -17,20 +17,14 @@ const useStyles = makeStyles(theme => {
     return {
         title: {
             width: '300px',
-            marginLeft: '80px'
+            marginLeft: '100px'
         },
         searchBar: {
-            width: '300px',
+            width: '460px',
             height: '40px',
             marginLeft: '20px',
             position: 'absolute',
-            left: '620px'
-        },
-        homeButton: {
-            marginLeft: '2px'
-        },
-        profileButton: {
-            marginLeft: '25px'
+            left: '410px'
         },
         navigation: {
             marginLeft: '-150px'
@@ -38,23 +32,31 @@ const useStyles = makeStyles(theme => {
         searchButton: {
             width: '50px',
             position: 'absolute',
-            left: '940px'
+            left: '895px'
         },
         registerButton: {
             width: '70px',
             position: 'absolute',
-            left: '1070px'
+            left: '1060px'
         },
         loginButton: {
             width: '100px',
             position: 'absolute',
-            left: '990px'
+            left: '980px'
+        },
+        signOutButton: {
+            width: '120px',
+            position: 'absolute',
         }
     }
 })
 
 function Header(props) {
-    const {UID, isLogin} = useUser();
+    const {
+        isLogin, UID, username, nickname,
+        setIsLogin, setUID, setUsername, setNickname, setStatus
+    } = useUser();
+
     const { title } = props;
     const classes = useStyles();
     const navigate = useNavigate();
@@ -70,9 +72,27 @@ function Header(props) {
         navigate('/login');
     }
 
+    const handleLogout = () => {
+        setIsLogin(false);
+        setUID("");
+        setUsername("");
+        setNickname("");
+
+        setStatus({
+            msg: "Successfully log out",
+            type: "success"
+        });
+        navigate('/posts');
+    }
+
     return (
         <>
-            <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Toolbar 
+                sx={{ 
+                    borderBottom: 1, 
+                    borderColor: 'divider',
+                }}
+            >
                 <Grid className={classes.title}>
                     <Typography
                         variant="h4"
@@ -90,63 +110,12 @@ function Header(props) {
                     </Typography>
                 </Grid>
 
-                <Grid className={classes.homeButton}>
-                    <Link
-                        color="inherit"
-                        variant="body2"
-                        sx={{cursor: 'pointer'}}
-                        onClick={()=>navigate(`/posts`)}
-                    >
-                        Home
-                    </Link>
-                </Grid>
-
-                {isLogin && 
-                    <>
-                        <Grid className={classes.profileButton}>
-                            <Link
-                                color="inherit"
-                                variant="body2"
-                                sx={{cursor: 'pointer'}}
-                                onClick={()=>navigate(`/profile/${UID}`)}
-                            >
-                                Profile
-                            </Link>
-                        </Grid>
-                        <Grid className={classes.profileButton}>
-                            <Link
-                                color="inherit"
-                                variant="body2"
-                                sx={{cursor: 'pointer'}}
-                                onClick={()=>navigate(`/profile/${UID}`)}
-                            >
-                                Followings
-                            </Link>
-                        </Grid>
-                    </>
-                }
-
-                {!isLogin && 
-                    <>
-                        <Grid className={classes.profileButton}>
-                            <Link
-                                color="inherit"
-                                variant="body2"
-                                sx={{cursor: 'pointer'}}
-                                onClick={()=>navigate(`/profile/${UID}`)}
-                            >
-                                Sponsor
-                            </Link>
-                        </Grid>
-                    </>
-                }
-
                 <Grid className={classes.searchBar}>             
                     <TextField 
                         size="small" 
                         value={searchVal}
                         onChange={(e) => setSearchVal(e.target.value)}
-                        sx={{ width: 300 }}
+                        sx={{ width: 460 }}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter')
                                 searchButtonRef.current.click();
@@ -173,6 +142,9 @@ function Header(props) {
                                 variant="contained"
                                 color="info"
                                 size="small" 
+                                sx={{
+                                    height: "35px"
+                                }}
                                 onClick={handleLogin}
                             >
                                 Log in
@@ -184,10 +156,84 @@ function Header(props) {
                                 variant="contained" 
                                 size="small" 
                                 onClick={handleRegister}
-                                sx={{width: "80px"}}
+                                sx={{
+                                    height: "35px",
+                                    width: "80px"
+                                }}
                             >
                                 Sign up
                             </Button>
+                        </Grid>
+                    </>
+                }
+
+                {isLogin && 
+                    <>
+                        <Grid 
+                            container
+                            justifyContent="center"
+                            alignContent="center"
+                            sx={{
+                                position: "absolute",
+                                left: "1000px",
+                                width: "60px",
+                                height: "60px",
+                            }}
+                        >
+
+                            <Stack 
+                                direction="row" 
+                                spacing={3}
+                                alignItems="center"
+                                divider={<Divider orientation="vertical" flexItem />}
+                                sx={{
+                                    marginLeft: "150px",
+                                }}
+                            >
+                                <Button 
+                                    onClick={()=>navigate(`/profile/${UID}`)}
+                                    sx={{textTransform:"none"}}
+                                >
+                                    <Stack
+                                        direction="row" 
+                                        alignItems="center"
+                                        spacing={1.3}
+                                    >
+                                        <Avatar
+                                            color="success"
+                                            variant="circular"
+                                            sx={{
+                                                width: "43px",
+                                                height: "43px",
+                                            }}
+                                        >
+                                            {username.charAt(0).toUpperCase()}
+                                        </Avatar>
+                                            
+                                        <Stack>
+                                            <Typography
+                                                sx={{color: "#292929", fontSize: "18px"}}    
+                                            >
+                                                {nickname.toLowerCase()}
+                                            </Typography>
+                                            <Typography
+                                                sx={{color: "gray", fontSize: "13px"}}    
+                                            >
+                                                {`@${username.toLowerCase()}`}
+                                            </Typography>
+                                        </Stack>
+                                    </Stack>
+                                </Button>
+
+                                <Button 
+                                    variant="outlined" 
+                                    size="small" 
+                                    onClick={handleLogout}
+                                    sx={{width: "88px", height: "40px",}}
+                                >
+                                    Sign out
+                                </Button>
+                            </Stack>
                         </Grid>
                     </>
                 }

@@ -24,7 +24,8 @@ const Search = () => {
     } = useQuery(POSTS_BY_TITLE_REGEX_QUERY, {
         variables: {
             'title': query,
-        }
+        },
+        fetchPolicy: 'cache-and-network',
     });
 
     let { postsByTitleRegex: posts } = loading 
@@ -53,7 +54,7 @@ const Search = () => {
                     </Grid>
 
                     <Grid item>
-                        <Button variant="outlined" onClick={()=>navigate("/createPost")}>
+                        <Button variant="contained" onClick={()=>navigate("/createPost")}>
                             Write 
                         </Button>
                     </Grid>

@@ -38,7 +38,9 @@ const Login = () => {
         username, setUsername,
         nickname, setNickname,
         UID, setUID,
+        status, setStatus
     } = useUser();
+
     const [LOGIN] = useMutation(LOGIN_MUTATION);
     const navigate = useNavigate();
 
@@ -70,7 +72,18 @@ const Login = () => {
             setNickname(fetchData.nickname);
             setUID(fetchData.UID);
             setIsLogin(true);
+
+            setStatus({
+                msg: "Successfully login",
+                type: "success"
+            });
             navigate("/posts");
+        }
+        else {
+            setStatus({
+                msg: "Wrong username or password ",
+                type: "error"
+            });
         }
     };
 
@@ -126,12 +139,12 @@ const Login = () => {
                         <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">
-                                Forgot password?
+                                    Forgot password?
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link href="#" variant="body2">
-                                {"Don't have an account? Sign Up"}
+                                <Link href="/register" variant="body2">
+                                    {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>
                         </Grid>

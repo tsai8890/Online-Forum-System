@@ -17,6 +17,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CREATE_USER_MUTATION } from '../graphql/mutations';
 import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from './hooks/useUser';
 
 function Copyright(props) {
   return (
@@ -36,6 +37,7 @@ const theme = createTheme();
 const Register = () => {
     const [createUserMutation] = useMutation(CREATE_USER_MUTATION);
     const navigate = useNavigate();
+    const { setStatus } = useUser();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -54,8 +56,30 @@ const Register = () => {
             });
 
             if (response.data.createUser.success) {
+                setStatus({
+                    msg: "Successfully register",
+                    type: "success"
+                });
                 navigate('/login');
             }
+            else if (response.data.createUser.msg === 'user existed') {
+                setStatus({
+                    msg: "User existed",
+                    type: "error"
+                })
+            }
+            else {
+                setStatus({
+                    msg: "Unknown error occurred, please contact the admin",
+                    type: "error"
+                })
+            }
+        }
+        else {
+            setStatus({
+                msg: 'Missing username, password or nickname',
+                type: 'error'
+            })
         }
     };
 
@@ -137,8 +161,8 @@ const Register = () => {
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link href="#" variant="body2">
-                                Already have an account? Sign in
+                                <Link href="/login" variant="body2">
+                                    Already have an account? Sign in
                                 </Link>
                             </Grid>
                         </Grid>

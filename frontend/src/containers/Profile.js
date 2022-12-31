@@ -26,6 +26,7 @@ const Profile = () => {
         loading: postsLoading, data: postsData
     } = useQuery(POSTS_BY_UID_QUERY, {
         variables: {UID},
+        fetchPolicy: 'cache-and-network',
     });
 
     const {

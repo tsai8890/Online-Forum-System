@@ -1,44 +1,64 @@
-import { useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { Button, Grid, Input, Paper, TextField } from "@mui/material";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { CREATE_POST_MUTATION } from "../graphql";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { UPDATE_POST_MUTATION, POST_BY_PID_QUERY } from "../graphql";
 import { useUser } from "./hooks/useUser";
 
-const CreatePost = () => {
+const EditPost = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const {UID, isLogin, setStatus} = useUser();
 
+    const { id: PID } = useParams();
     const navigate = useNavigate();
     
-    const [createPost] = useMutation(CREATE_POST_MUTATION);
+    const [updatePost] = useMutation(UPDATE_POST_MUTATION);
+    const { loading, data } = useQuery(POST_BY_PID_QUERY, {
+        variables: {
+            PID
+        }
+    })
+    const { postByPID: post } = loading ? { postByPID: [] } : data;
 
-    if (!isLogin) {
+    useEffect(() => {
+        if (post !== []) {
+            setTitle(post.title);
+            setContent(post.content);
+        }
+    }, [post])
+
+    if (!isLogin || (!loading && UID !== post.UID)) {
         setStatus({
-            type: "error",
-            msg: "You should login first"
-        });
-        navigate('/login');
+            type: 'error',
+            msg: 'Permission denied'
+        })
+        return;        
     }
 
     const handleSubmit = async () => {
-        if (!title || !content) {
-            setStatus({
-                type: "error",
-                msg: "Missing title or content"
-            })
-            return;
-        }
-
-        const response = await createPost({
+        const { data: { updatePost: {
+            success,
+            msg
+        }}} = await updatePost({
             variables: {
-                UID, title, content
+                PID, title, content
             }
         });
 
-        const data = response.data.createPost;
-        navigate(`/post/${data.PID}`);
+        if (success) {
+            setStatus({
+                type: 'success',
+                msg: 'Successfully updated',
+            })
+        }
+        else {
+            setStatus({
+                type: 'error',
+                msg: 'Update failed'
+            })
+        }
+        navigate(`/post/${PID}`);
     }
 
     return (
@@ -50,7 +70,7 @@ const CreatePost = () => {
                     width: "100%",
                 }}>
                 <div>
-                    <h1>Write your post</h1>
+                    <h1>Edit your post</h1>
                 </div>
             </Grid>
 
@@ -121,7 +141,7 @@ const CreatePost = () => {
                             marginBottom: "10px"
                         }}
                     >
-                        Post
+                        Update
                     </Button>
                 </Grid> 
             </Grid>  
@@ -129,4 +149,4 @@ const CreatePost = () => {
     )
 }
 
-export default CreatePost;
+export default EditPost;

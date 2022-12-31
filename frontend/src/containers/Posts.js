@@ -19,7 +19,9 @@ const Posts = () => {
     
     const {
         loading, error, data: postsData
-    } = useQuery(POSTS_QUERY);
+    } = useQuery(POSTS_QUERY, {
+        fetchPolicy: 'cache-and-network',
+    });
 
     let { posts } = loading ? { posts: [] } : postsData;
 
@@ -45,7 +47,7 @@ const Posts = () => {
                     </Grid>
 
                     <Grid item>
-                        <Button variant="outlined" onClick={()=>navigate("/createPost")}>
+                        <Button variant="contained" onClick={()=>navigate("/createPost")}>
                             Write 
                         </Button>
                     </Grid>
