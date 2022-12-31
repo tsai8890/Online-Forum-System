@@ -24,12 +24,19 @@ const Post = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (!isLogin || !comment) {
+        if (!isLogin) {
             setStatus({
                 type: "error",
                 msg: "You should login first"
             });
             navigate("/login");
+            return;
+        }
+        if (!comment) {
+            setStatus({
+                type: "error",
+                msg: "Please type something"
+            });
             return;
         }
 
