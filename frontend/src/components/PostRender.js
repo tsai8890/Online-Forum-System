@@ -84,7 +84,7 @@ const PostRender = ({
                     }} 
                 />
                 <Box component="div" paddingBottom={20}>
-                    <Typography variant="h5" color="#423c3c" paragraph sx={{whiteSpace: "pre"}}>
+                    <Typography variant="h5" color="#423c3c" paragraph sx={{whiteSpace: "pre-wrap"}}>
                         {content}
                     </Typography>
                 </Box>
