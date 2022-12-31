@@ -6,7 +6,7 @@ import {
 
 import CssBaseline from '@mui/material/CssBaseline';
 import Login from './containers/Login';
-import Register from './containers/register';
+import Register from './containers/Register';
 import Posts from './containers/Posts';
 import Post from './containers/Post';
 import CreatePost from './containers/CreatePost';
@@ -16,6 +16,7 @@ import Profile from './containers/Profile';
 import { UserProvider } from './containers/hooks/useUser';
 import Header from './containers/Header';
 import Search from './containers/Search';
+import SysMessage from './containers/SysMessage';
 
 const sections = [
 	{ title: 'Home', url: '/posts' },
@@ -52,6 +53,7 @@ function App() {
           <Route path="*" element={<h1>Error, Page Not Found</h1>} />
         </Routes>
       </BrowserRouter>
+      <SysMessage></SysMessage>
     </UserProvider>
   );
 }

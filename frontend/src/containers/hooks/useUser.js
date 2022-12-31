@@ -12,6 +12,9 @@ const UserContext = createContext({
 
     isLogin: false,
     setIsLogin: () => {},
+
+    status: {},
+    setStatus: () => {}
 });
 
 const UserProvider = (props) => {
@@ -19,12 +22,13 @@ const UserProvider = (props) => {
     const [nickname, setNickname] = useState('');
     const [UID, setUID] = useState('');
     const [isLogin, setIsLogin] = useState(false);
+    const [status, setStatus] = useState({});
 
     return (
         <UserContext.Provider
             value={{
-                username, nickname, UID, isLogin, 
-                setUsername, setNickname, setUID, setIsLogin
+                username, nickname, UID, isLogin, status,
+                setUsername, setNickname, setUID, setIsLogin, setStatus
             }}
             {...props}
         />
