@@ -211,6 +211,31 @@ const resolvers = {
             await post.save(); 
             return newComment;
         },
+        deletePost: async (parent, args, contextValue, info) => {
+            const {PostModel} = contextValue;
+            const {PID} = args;
+            try {
+                const { deletedCount } = await PostModel.deleteMany({PID});
+                if (deletedCount > 0) {
+                    return {
+                        success: true,
+                        msg: 'successfully deleted'
+                    }
+                }
+                else {
+                    return {
+                        success: false,
+                        msg: 'not existed'
+                    }
+                }
+            }
+            catch (e) {
+                return {
+                    success: false,
+                    msg: 'delete failed'
+                }
+            }
+        }
     },
 
 

@@ -24,7 +24,8 @@ const UserPosts = () => {
     } = useQuery(POSTS_BY_UID_QUERY, {
         variables: {
             UID
-        }
+        },
+        fetchPolicy: 'cache-and-network',
     });
 
     const {
