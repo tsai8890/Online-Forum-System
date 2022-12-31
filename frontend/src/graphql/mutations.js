@@ -64,3 +64,12 @@ export const DELETE_POST_MUTATION = gql`
         }
     }
 `
+
+export const UPDATE_RATING_MUTATION = gql`
+    mutation updateRating($UID: String!, $PID: String!, $action: String!) {
+        updateRating(UID: $UID, PID: $PID, action: $action) {
+            success
+            msg
+        }
+    }
+`

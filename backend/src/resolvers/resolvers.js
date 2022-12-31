@@ -257,6 +257,74 @@ const resolvers = {
                     msg: 'delete failed'
                 }
             }
+        },
+        updateRating: async (parent, args, contextValue, info) => {
+            const {PostModel} = contextValue;
+            const {UID, PID, action} = args;
+
+            const post = await PostModel.findOne({PID});
+            if (action === 'push') {
+                if (post.rating.push.stat.includes(UID)) {
+                    return {
+                        success: false,
+                        msg: 'already push'
+                    }
+                }
+                post.rating.push.stat.push(UID);
+                post.rating.push.total += 1;
+            }
+            else if (action === 'down') {
+                if (post.rating.down.stat.includes(UID)) {
+                    return {
+                        success: false,
+                        msg: 'already down'
+                    }
+                }
+                post.rating.down.stat.push(UID);
+                post.rating.down.total += 1;
+            }
+            else if (action === 'push-cancel') {
+                if (!post.rating.push.stat.includes(UID)) {
+                    return {
+                        success: false,
+                        msg: "not push yet"
+                    }
+                }
+                const idx = post.rating.push.stat.indexOf(UID);
+                post.rating.push.stat.splice(idx, 1);
+                post.rating.push.total -= 1;
+            }
+            else if (action === 'down-cancel') {
+                if (!post.rating.down.stat.includes(UID)) {
+                    return {
+                        success: false,
+                        msg: "not down yet"
+                    }
+                }
+                const idx = post.rating.down.stat.indexOf(UID);
+                post.rating.down.stat.splice(idx, 1);
+                post.rating.down.total -= 1;
+            }
+            else {
+                return {
+                    success: false,
+                    msg: 'unknown action'
+                }
+            }
+
+            try {
+                await post.save();
+                return {
+                    success: true,
+                    msg: 'successfully updated'
+                }
+            }
+            catch (e) {
+                return {
+                    success: false,
+                    msg: 'db error'
+                }
+            }
         }
     },
 

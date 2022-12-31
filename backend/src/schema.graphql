@@ -36,6 +36,12 @@ type Mutation {
         content: String!
     ): ApiResponse
 
+    updateRating(
+        UID: String!,
+        PID: String!,
+        action: String!
+    ): ApiResponse
+
     deletePost(
         PID: String!
     ): ApiResponse
