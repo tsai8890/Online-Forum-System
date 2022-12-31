@@ -53,7 +53,7 @@ const Search = () => {
                     </Grid>
 
                     <Grid item>
-                        <Button variant="outlined" onClick={()=>navigate("/createPost")}>
+                        <Button variant="contained" onClick={()=>navigate("/createPost")}>
                             Write 
                         </Button>
                     </Grid>

@@ -8,21 +8,29 @@ import { useUser } from "./hooks/useUser";
 const CreatePost = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const {UID, isLogin} = useUser();
+    const {UID, isLogin, setStatus} = useUser();
 
     const navigate = useNavigate();
     
     const [createPost] = useMutation(CREATE_POST_MUTATION);
 
     if (!isLogin) {
-        return (
-            <>
-                <h1>Log in to post!!</h1>
-            </>
-        )
+        setStatus({
+            type: "error",
+            msg: "You should login first"
+        });
+        navigate('/login');
     }
 
     const handleSubmit = async () => {
+        if (!title || !content) {
+            setStatus({
+                type: "error",
+                msg: "Missing title or content"
+            })
+            return;
+        }
+
         const response = await createPost({
             variables: {
                 UID, title, content

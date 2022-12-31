@@ -24,7 +24,9 @@ const SysMessage = () => {
     };
 
     return (
-        <>
+        msgType === ""
+        ? null
+        : <>
             <Snackbar
                 open={open}
                 autoHideDuration={1700}
