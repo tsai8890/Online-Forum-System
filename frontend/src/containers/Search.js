@@ -24,7 +24,8 @@ const Search = () => {
     } = useQuery(POSTS_BY_TITLE_REGEX_QUERY, {
         variables: {
             'title': query,
-        }
+        },
+        fetchPolicy: 'cache-and-network',
     });
 
     let { postsByTitleRegex: posts } = loading 

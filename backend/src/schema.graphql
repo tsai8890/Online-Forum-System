@@ -29,6 +29,16 @@ type Mutation {
         UID: String!,
         comment: String!
     ): Comment
+
+    updatePost(
+        PID: String!,
+        title: String!,
+        content: String!
+    ): ApiResponse
+
+    deletePost(
+        PID: String!
+    ): ApiResponse
 }
 
 type User {

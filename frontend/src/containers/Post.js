@@ -1,7 +1,11 @@
-import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, goBack } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/client';
 
-import { CREATE_COMMENT_MUTATION, POST_BY_PID_QUERY } from '../graphql';
+import { 
+    CREATE_COMMENT_MUTATION, 
+    DELETE_POST_MUTATION, 
+    POST_BY_PID_QUERY 
+} from '../graphql';
 import PostRender from '../components/PostRender';
 import { useEffect, useState } from 'react';
 import { useUser } from '../containers/hooks/useUser';
@@ -16,6 +20,7 @@ const Post = () => {
     const navigate = useNavigate();
 
     const [createComment] = useMutation(CREATE_COMMENT_MUTATION);
+    const [deletePost] = useMutation(DELETE_POST_MUTATION);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -50,10 +55,54 @@ const Post = () => {
     const { loading, data: postData } = useQuery(POST_BY_PID_QUERY, {
         variables: {
             PID
-        }
+        },
+        fetchPolicy: 'cache-and-network'
     });
 
     const { postByPID: post } = loading ? { postByPID: [] } : postData;
+
+    const handleEdit = async () => {
+        navigate(`/editpost/${PID}`)
+    }
+
+    const handleDelete = async () => {
+        if (post.UID !== UID) {
+            setStatus({
+                type: "error",
+                msg: "Permission denied"
+            })
+            return;
+        }
+
+        const { 
+            data: { deletePost: { success, msg }}
+        } = await deletePost({
+            variables: {
+                PID
+            }
+        });
+
+        if (success) {
+            setStatus({
+                type: "success",
+                msg: "Successfully deleted"
+            })
+            navigate(-1);
+        }
+        else if (msg === 'not existed') {
+            setStatus({
+                type: "error",
+                msg: "Post already deleted",
+            })
+        }
+        else {
+            setStatus({
+                type: "error",
+                msg: "Deletion failed"
+            })
+        }
+    }
+
 
     useEffect(() => {
         if (!loading)
@@ -67,6 +116,9 @@ const Post = () => {
             setComment={setComment}
             comments={comments}
             handleSubmit={handleSubmit}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+            isSelfPost={UID === post.UID}
         />
     )
 }

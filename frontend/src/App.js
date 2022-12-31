@@ -10,6 +10,7 @@ import Register from './containers/Register';
 import Posts from './containers/Posts';
 import Post from './containers/Post';
 import CreatePost from './containers/CreatePost';
+import EditPost from './containers/EditPost';
 import UserPost from './containers/UserPosts';
 import Profile from './containers/Profile';
 
@@ -46,6 +47,7 @@ function App() {
           <Route path="/posts" element={<Posts />}/>
           <Route path="/post/:id" element={<Post />} />
           <Route path="/createpost" element={<CreatePost />} />
+          <Route path="/editpost/:id" element={<EditPost />} />
           <Route path="/posts/:id" element={<UserPost />} />
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/search" element={<Search />} />
