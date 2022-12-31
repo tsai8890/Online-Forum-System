@@ -87,7 +87,7 @@ const Post = () => {
                 type: "success",
                 msg: "Successfully deleted"
             })
-            navigate(-1);
+            navigate(`/posts/${UID}`);
         }
         else if (msg === 'not existed') {
             setStatus({
