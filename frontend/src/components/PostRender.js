@@ -18,7 +18,16 @@ import CommentItem from './CommentItem';
 
 
 /* Ref. https://github.com/mui/material-ui/blob/v5.11.2/docs/data/material/getting-started/templates/album/Album.js */
-const PostRender = ({ post, comment: myComment, comments, setComment, handleSubmit, handleDelete, isSelfPost }) => {
+const PostRender = ({ 
+    post, 
+    comment: myComment, 
+    comments, 
+    setComment, 
+    handleSubmit, 
+    handleEdit,
+    handleDelete, 
+    isSelfPost 
+}) => {
     let { title, username, nickname, content, timestamp } = post
     const date = new Date(parseInt(timestamp)).toLocaleString();
 
@@ -50,12 +59,12 @@ const PostRender = ({ post, comment: myComment, comments, setComment, handleSubm
                     <Grid item>
                         {isSelfPost
                             ? <>
-                                <Tooltip title="Edit">
-                                    <IconButton>
+                                <Tooltip title="Edit" placement="top">
+                                    <IconButton onClick={handleEdit}>
                                         <EditIcon color="primary"/>
                                     </IconButton>
                                 </Tooltip>
-                                <Tooltip title="Delete">
+                                <Tooltip title="Delete" placement="top">
                                     <IconButton onClick={handleDelete}>
                                         <DeleteIcon />
                                     </IconButton>

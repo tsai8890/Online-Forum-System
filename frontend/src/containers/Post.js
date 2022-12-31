@@ -48,10 +48,15 @@ const Post = () => {
     const { loading, data: postData } = useQuery(POST_BY_PID_QUERY, {
         variables: {
             PID
-        }
+        },
+        fetchPolicy: 'cache-and-network'
     });
 
     const { postByPID: post } = loading ? { postByPID: [] } : postData;
+
+    const handleEdit = async () => {
+        navigate(`/editpost/${PID}`)
+    }
 
     const handleDelete = async () => {
         if (post.UID !== UID) {
@@ -105,6 +110,7 @@ const Post = () => {
             comments={comments}
             handleSubmit={handleSubmit}
             handleDelete={handleDelete}
+            handleEdit={handleEdit}
             isSelfPost={UID === post.UID}
         />
     )

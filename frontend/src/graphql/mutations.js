@@ -47,6 +47,15 @@ export const CREATE_COMMENT_MUTATION = gql`
     }
 `
 
+export const UPDATE_POST_MUTATION = gql`
+    mutation updatePost($PID: String!, $title: String!, $content: String!) {
+        updatePost(PID: $PID, title: $title, content: $content) {
+            success
+            msg
+        }
+    }
+`
+
 export const DELETE_POST_MUTATION = gql`
     mutation deletePost($PID: String!) {
         deletePost(PID: $PID) {
