@@ -5,9 +5,12 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import EditIcon from '@mui/icons-material/Edit';
 
 function UserInfo(props) {
-  const { user } = props;
+  const { user, isSelf, handleEdit} = props;
 
   return (
     <Paper
@@ -32,12 +35,22 @@ function UserInfo(props) {
           backgroundColor: 'rgba(0,0,0,.3)',
         }}
       />
-      <Grid container>
-        <Grid item md={12}>
+      <Grid container direction='row' justifyContent='flex-start'>
+        <Grid container item xs={0.3} justifyContent='flex-end  ' alignItems='flex-start'>
+            {!isSelf ? null
+            : <Grid item>
+              <Tooltip title="Edit" placement="top">
+                  <IconButton onClick={handleEdit}>
+                      <EditIcon sx={{color: '#D9EAD3'}}/>
+                  </IconButton>
+              </Tooltip>
+            </Grid>}
+        </Grid>
+        <Grid item xs={6}>
           <Box
             sx={{
               position: 'relative',
-              p: { xs: 3, md: 6 },
+              p: { xs: 3, md: 4.5 },
               pr: { md: 0 },
             }}
           >
@@ -50,7 +63,7 @@ function UserInfo(props) {
                 </Typography>
             </div>
             <Typography variant="h6" color="inherit" paragraph>
-              {user.intro ?? "The user has no self intro ..."}
+              {user.intro && user.intro !== '' ? user.intro : "The user has no self intro ..."}
             </Typography>
           </Box>
         </Grid>

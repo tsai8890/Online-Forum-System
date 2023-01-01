@@ -13,6 +13,7 @@ import CreatePost from './containers/CreatePost';
 import EditPost from './containers/EditPost';
 import UserPost from './containers/UserPosts';
 import Profile from './containers/Profile';
+import EditProfile from './containers/EditProfile'
 
 import { UserProvider } from './containers/hooks/useUser';
 import Header from './containers/Header';
@@ -51,6 +52,7 @@ function App() {
           <Route path="/posts/:id" element={<UserPost />} />
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/editprofile" element={<EditProfile />} />
           <Route path="/" element={<Posts />} />
           <Route path="*" element={<h1>Error, Page Not Found</h1>} />
         </Routes>

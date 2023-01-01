@@ -325,6 +325,36 @@ const resolvers = {
                     msg: 'db error'
                 }
             }
+        },
+
+        updateUser: async (parent, args, contextValue, info) => {
+            const {UserModel} = contextValue;
+            const {UID, nickname, intro} = args;
+
+            const user = await UserModel.findOne({UID});
+            if (!user) {
+                return {
+                    success: false,
+                    msg: 'no such a user exists'
+                }
+            }
+
+            user.nickname = nickname;
+            user.intro = intro;
+            
+            try {
+                await user.save();
+                return {
+                    success: true,
+                    msg: 'successfully updated'
+                }
+            }
+            catch (e) {
+                return {
+                    success: false,
+                    msg: 'update failed'
+                }
+            }
         }
     },
 
