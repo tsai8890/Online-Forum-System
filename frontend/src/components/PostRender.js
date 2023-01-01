@@ -54,7 +54,7 @@ const PostRender = ({
             <Container maxWidth="md">
                 <Typography
                     component="h1"
-                    variant="h2"
+                    variant="h4"
                     color="text.primary"
                 >
                     {title}
@@ -111,7 +111,7 @@ const PostRender = ({
                         bgcolor: "silver"
                     }} 
                 />
-                <Box component="div" paddingBottom={20}>
+                <Box component="div" paddingBottom={5}>
                     <Grid container direction="row" justifyContent="space-between">
                         <Grid item xs={0.8}>
                             <Stack spacing={-1} alignItems='center'>
