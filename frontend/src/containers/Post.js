@@ -11,7 +11,6 @@ import PostRender from '../components/PostRender';
 import { useEffect, useState } from 'react';
 import { useUser } from '../containers/hooks/useUser';
 
-
 const Post = () => {
     const { id: PID } = useParams();
     const [comment, setComment] = useState('');
