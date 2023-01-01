@@ -14,6 +14,8 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import CommentItem from './CommentItem';
 
 
@@ -26,9 +28,13 @@ const PostRender = ({
     handleSubmit, 
     handleEdit,
     handleDelete, 
+    handlePush,
+    handleDown,
+    hasPush,
+    hasDown,
     isSelfPost 
 }) => {
-    let { title, username, nickname, content, timestamp } = post
+    let { title, username, nickname, content, timestamp, rating } = post
     const date = new Date(parseInt(timestamp)).toLocaleString();
 
 	return (
@@ -84,9 +90,26 @@ const PostRender = ({
                     }} 
                 />
                 <Box component="div" paddingBottom={20}>
-                    <Typography variant="h5" color="#423c3c" paragraph sx={{whiteSpace: "pre-wrap"}}>
-                        {content}
-                    </Typography>
+                    <Grid container direction="row" justifyContent="space-between">
+                        <Grid item xs={0.8}>
+                            <Stack spacing={-1} alignItems='center'>
+                                <IconButton onClick={handlePush} color={hasPush ? 'primary' : ''}>
+                                    <KeyboardArrowUpIcon fontSize='large'/>
+                                </IconButton>
+                                <Typography variant='h6'>
+                                    {rating.push.total - rating.down.total}
+                                </Typography>
+                                <IconButton onClick={handleDown} color={hasDown ? 'primary' : ''}>
+                                    <KeyboardArrowDownIcon fontSize='large'/>
+                                </IconButton>
+                            </Stack>
+                        </Grid>
+                        <Grid item xs={11}>
+                            <Typography variant="h5" color="#423c3c" paragraph sx={{whiteSpace: "pre-wrap"}}>
+                                {content}
+                            </Typography>
+                        </Grid>
+                    </Grid>
                 </Box>
                 <Box
                     component="form"

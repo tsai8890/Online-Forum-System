@@ -10,7 +10,7 @@ import UserInfo from '../components/UserInfo';
 const sortPosts = (posts) => {
     let sortPosts = JSON.parse(JSON.stringify(posts));
     sortPosts.sort((postA, postB) => {
-        if (postA.rating.push.total != postB.rating.push.total)
+        if (postA.rating.push.total !== postB.rating.push.total)
             return postA.rating.push.total > postB.rating.push.total ? 1 : -1;
         else
             return parseInt(postA.timestamp) < parseInt(postB.timestamp) ? 1 : -1;

@@ -1,10 +1,11 @@
-import { useNavigate, useParams, goBack } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/client';
 
 import { 
     CREATE_COMMENT_MUTATION, 
     DELETE_POST_MUTATION, 
-    POST_BY_PID_QUERY 
+    POST_BY_PID_QUERY,
+    UPDATE_RATING_MUTATION
 } from '../graphql';
 import PostRender from '../components/PostRender';
 import { useEffect, useState } from 'react';
@@ -15,12 +16,13 @@ const Post = () => {
     const { id: PID } = useParams();
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
-    const { nickname, UID, isLogin, setStatus } = useUser();
+    const { UID, isLogin, setStatus } = useUser();
 
     const navigate = useNavigate();
 
     const [createComment] = useMutation(CREATE_COMMENT_MUTATION);
     const [deletePost] = useMutation(DELETE_POST_MUTATION);
+    const [updateRating] = useMutation(UPDATE_RATING_MUTATION);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -52,7 +54,7 @@ const Post = () => {
         setComment('');
     }
 
-    const { loading, data: postData } = useQuery(POST_BY_PID_QUERY, {
+    const { loading, data: postData, refetch } = useQuery(POST_BY_PID_QUERY, {
         variables: {
             PID
         },
@@ -103,6 +105,65 @@ const Post = () => {
         }
     }
 
+    const handlePush = async () => {
+        if (!isLogin) {
+            setStatus({
+                type: "error",
+                msg: "You should login first"
+            });
+            navigate('/login');
+            return;
+        }
+        const action = post.rating.push.stat.includes(UID) 
+            ? 'push-cancel' : 'push';
+        const {data: {updateRating: {success}}} = await updateRating({
+            variables: {
+                UID,
+                PID,
+                action,
+            }
+        })
+
+        if (success) {
+            refetch();
+        }
+        else {
+            setStatus({
+                type: "error",
+                msg: "Unknown error occurred"
+            })
+        }
+    }
+
+    const handleDown = async () => {
+        if (!isLogin) {
+            setStatus({
+                type: "error",
+                msg: "You should login first"
+            });
+            navigate('/login');
+        }
+        const action = post.rating.down.stat.includes(UID) 
+            ? 'down-cancel' : 'down';
+        const {data: {updateRating: {success}}} = await updateRating({
+            variables: {
+                UID,
+                PID,
+                action,
+            }
+        })
+
+        if (success) {
+            refetch();
+        }
+        else {
+            setStatus({
+                type: "error",
+                msg: "Unknown error occurred"
+            })
+        }
+    }
+
 
     useEffect(() => {
         if (!loading)
@@ -118,6 +179,10 @@ const Post = () => {
             handleSubmit={handleSubmit}
             handleDelete={handleDelete}
             handleEdit={handleEdit}
+            handlePush={handlePush}
+            handleDown={handleDown}
+            hasPush={post.rating.push.stat.includes(UID)}
+            hasDown={post.rating.down.stat.includes(UID)}
             isSelfPost={UID === post.UID}
         />
     )
