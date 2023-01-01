@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import EditIcon from '@mui/icons-material/Edit';
+import { Stack } from '@mui/material';
 
 function UserInfo(props) {
   const { user, isSelf, handleEdit} = props;
@@ -37,14 +38,6 @@ function UserInfo(props) {
       />
       <Grid container direction='row' justifyContent='flex-start'>
         <Grid container item xs={0.3} justifyContent='flex-end  ' alignItems='flex-start'>
-            {!isSelf ? null
-            : <Grid item>
-              <Tooltip title="Edit" placement="top">
-                  <IconButton onClick={handleEdit}>
-                      <EditIcon sx={{color: '#D9EAD3'}}/>
-                  </IconButton>
-              </Tooltip>
-            </Grid>}
         </Grid>
         <Grid item xs={6}>
           <Box
@@ -54,15 +47,22 @@ function UserInfo(props) {
               pr: { md: 0 },
             }}
           >
-            <div>
-                <Typography component="h1" variant="h3" color="inherit" gutterBottom>
+            <Stack direction="row" spacing={2}>
+              <Typography component="h2" variant="h4" color="inherit" sx={{fontWeight: "600"}}>
                 {user.nickname}
-                </Typography>
-                <Typography variant="subtitle1" color="#d6adad">
-                {`@${user.username}`}
-                </Typography>
-            </div>
-            <Typography variant="h6" color="inherit" paragraph>
+              </Typography>
+
+              {isSelf &&
+                <IconButton onClick={handleEdit}>
+                    <EditIcon sx={{color: '#D9EAD3'}}/>
+                </IconButton>
+              }
+            </Stack>
+            
+            <Typography variant="subtitle1" color="#d6adad" gutterBottom sx={{fontSize: "20px"}}>
+              {`@${user.username}`}
+            </Typography>
+            <Typography variant="h6" color="inherit" paragraph sx={{marginTop: "15px", color: "#BEBEBE"}}>
               {user.intro && user.intro !== '' ? user.intro : "The user has no self intro ..."}
             </Typography>
           </Box>

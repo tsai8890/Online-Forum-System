@@ -71,7 +71,7 @@ const Profile = () => {
             <Grid container
                 justifyContent="center"
                 sx={{
-                    margin: "20px"
+                    marginTop: "20px"
                 }}
             >
                 <Button variant="outlined" onClick={() => navigate(`/posts/${UID}`)} >
