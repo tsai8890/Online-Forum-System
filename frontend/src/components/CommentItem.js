@@ -4,20 +4,28 @@ import { useNavigate } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
 import FaceIcon from '@mui/icons-material/Face';
-import { Divider } from '@mui/material';
+import Stack from '@mui/material/Stack';
 
 /* Ref. https://github.com/mui/material-ui/blob/v5.11.2/docs/data/material/getting-started/templates/blog/FeaturedPost.js */
-const CommentItem = ({ comment }) => {
-	let { nickname, message } = comment;
+const CommentItem = ({ comment, authorUID }) => {
+	let { nickname, message, UID } = comment;
     const navigate = useNavigate();
+
+    const authorComment = authorUID === UID;
 
 	return (
 		<Grid item xs={12}>
             <Stack direction="row" spacing={1} sx={{ marginBottom: "10px"}}>
                 <Grid sx={{ width: "120px" }}>
-                    <Chip icon={<FaceIcon />} label={nickname} variant="outlined" />
+                    <Chip 
+                        icon={<FaceIcon />} 
+                        label={nickname} 
+                        variant={authorComment ? 'filled' : 'outlined'}
+                        color={authorComment ? 'primary' : 'default'}
+                        
+                        onClick={() => navigate(`/profile/${UID}`)}
+                    />
                 </Grid>
                 <Typography 
                     variant="p" 
