@@ -54,14 +54,12 @@ function UserInfo(props) {
               pr: { md: 0 },
             }}
           >
-            <div>
-                <Typography component="h1" variant="h3" color="inherit" gutterBottom>
-                {user.nickname}
-                </Typography>
-                <Typography variant="subtitle1" color="#d6adad">
-                {`@${user.username}`}
-                </Typography>
-            </div>
+            <Typography component="h2" variant="h4" color="inherit">
+              {user.nickname}
+            </Typography>
+            <Typography variant="subtitle1" color="#d6adad" gutterBottom>
+              {`@${user.username}`}
+            </Typography>
             <Typography variant="h6" color="inherit" paragraph>
               {user.intro && user.intro !== '' ? user.intro : "The user has no self intro ..."}
             </Typography>
