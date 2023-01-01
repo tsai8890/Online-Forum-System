@@ -73,3 +73,12 @@ export const UPDATE_RATING_MUTATION = gql`
         }
     }
 `
+
+export const UPDATE_USER_MUTATION = gql`
+    mutation updateUser($UID: String!, $nickname: String!, $intro: String) {
+        updateUser(UID: $UID, nickname: $nickname, intro: $intro) {
+            success
+            msg
+        }
+    }
+`

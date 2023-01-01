@@ -6,6 +6,7 @@ import Button from '@mui/material/Button'
 import { POSTS_BY_UID_QUERY, USER_BY_UID_QUERY } from '../graphql';
 import PostItem from '../components/PostItem';
 import UserInfo from '../components/UserInfo';
+import { useUser } from './hooks/useUser';
 
 const sortPosts = (posts) => {
     let sortPosts = JSON.parse(JSON.stringify(posts));
@@ -20,6 +21,7 @@ const sortPosts = (posts) => {
 
 const Profile = () => {
     const { id: UID } = useParams();
+    const { UID: selfUID } = useUser();
     const navigate = useNavigate();
     
     const {
@@ -33,6 +35,7 @@ const Profile = () => {
         loading: userLoading, data: userData
     } = useQuery(USER_BY_UID_QUERY, {
         variables: {UID},
+        fetchPolicy: 'cache-and-network',
     });
 
 
@@ -46,9 +49,13 @@ const Profile = () => {
         ? { userByUID: [] }
         : userData;
 
+    const handleEdit = () => {
+        navigate('/editprofile');
+    }
+
     return (
         <>  
-            <UserInfo user={user} />
+            <UserInfo user={user} isSelf={UID === selfUID} handleEdit={handleEdit}/>
             <Grid container spacing={1} 
                 justifyContent="center"
                 alignItems="center"
