@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom'
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -16,9 +17,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import Chip from '@mui/material/Chip';
+import FaceIcon from '@mui/icons-material/Face';
+
 import CommentItem from './CommentItem';
 import AlertDialog from './AlertDialog';
-
 
 /* Ref. https://github.com/mui/material-ui/blob/v5.11.2/docs/data/material/getting-started/templates/album/Album.js */
 const PostRender = ({ 
@@ -35,9 +38,10 @@ const PostRender = ({
     hasDown,
     isSelfPost 
 }) => {
-    let { title, username, nickname, content, timestamp, rating } = post
+    let { title, UID, nickname, content, timestamp, rating } = post
     const date = new Date(parseInt(timestamp)).toLocaleString();
     const [open, setOpen] = React.useState(false);
+    const navigate = useNavigate();
 
 	return (
 		<Box
@@ -59,10 +63,20 @@ const PostRender = ({
                     justifyContent="space-between"
                     alignItems="baseline"
                 >
-                    <Grid item>
-                        <Typography variant="p" color="text.secondary">
-                            {`${date} by ${nickname}`}
-                        </Typography>
+                    <Grid container item alignItems='center' spacing={1} xs={5}>
+                        <Grid item>
+                            <Chip 
+                                icon={<FaceIcon />} 
+                                label={nickname} 
+                                color='primary'
+                                onClick={() => navigate(`/profile/${UID}`)}
+                            />
+                        </Grid>
+                        <Grid item>
+                            <Typography variant="p" color="text.secondary">
+                                {`${date}`}
+                            </Typography>
+                        </Grid>
                     </Grid>
                     <Grid item>
                         {isSelfPost
@@ -164,6 +178,7 @@ const PostRender = ({
                         <CommentItem 
                             key={comment.CID}
                             comment={comment}
+                            authorUID={UID}
                         />
                     )}
                 </Grid>
