@@ -17,6 +17,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import CommentItem from './CommentItem';
+import AlertDialog from './AlertDialog';
 
 
 /* Ref. https://github.com/mui/material-ui/blob/v5.11.2/docs/data/material/getting-started/templates/album/Album.js */
@@ -36,6 +37,7 @@ const PostRender = ({
 }) => {
     let { title, username, nickname, content, timestamp, rating } = post
     const date = new Date(parseInt(timestamp)).toLocaleString();
+    const [open, setOpen] = React.useState(false);
 
 	return (
 		<Box
@@ -71,10 +73,16 @@ const PostRender = ({
                                     </IconButton>
                                 </Tooltip>
                                 <Tooltip title="Delete" placement="top">
-                                    <IconButton onClick={handleDelete}>
+                                    <IconButton onClick={() => {setOpen(true)}}>
                                         <DeleteIcon />
                                     </IconButton>
                                 </Tooltip>
+                                <AlertDialog 
+                                    content='Do you really want to delete the post?'
+                                    open={open}
+                                    setOpen={setOpen}
+                                    handleAgree={handleDelete}
+                                />
                             </>
                             : null
                         }
