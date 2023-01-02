@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import EditIcon from '@mui/icons-material/Edit';
+import { Stack } from '@mui/material';
 
 function UserInfo(props) {
   const { user, isSelf, handleEdit} = props;
@@ -37,14 +38,6 @@ function UserInfo(props) {
       />
       <Grid container direction='row' justifyContent='flex-start'>
         <Grid container item xs={0.3} justifyContent='flex-end  ' alignItems='flex-start'>
-            {!isSelf ? null
-            : <Grid item>
-              <Tooltip title="Edit" placement="top">
-                  <IconButton onClick={handleEdit}>
-                      <EditIcon sx={{color: '#D9EAD3'}}/>
-                  </IconButton>
-              </Tooltip>
-            </Grid>}
         </Grid>
         <Grid item xs={6}>
           <Box

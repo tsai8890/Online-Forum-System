@@ -6,6 +6,9 @@
     "scripts": {
         "start": "cd frontend && yarn start",
         "server": "cd backend && yarn server",
-        "install:all": "yarn install --cwd frontend && yarn install --cwd backend"
+        "install:all": "yarn install --cwd frontend && yarn install --cwd backend",
+        "install:prod": "cd frontend && yarn install --freeze-lockfile && cd ../backend && yarn install --freeze-lockfile",
+        "build": "cd frontend && yarn build",
+        "deploy": "cd backend && yarn deploy"
     }
 }

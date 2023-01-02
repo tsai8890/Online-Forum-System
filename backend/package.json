@@ -4,7 +4,8 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "server": "nodemon src/index.js --ext js --exec babel-node"
+        "server": "nodemon src/index.js --ext js --exec babel-node",
+        "deploy": "NODE_ENV=production babel-node src/index.js"
     },
     "dependencies": {
         "@apollo/client": "^3.7.3",
