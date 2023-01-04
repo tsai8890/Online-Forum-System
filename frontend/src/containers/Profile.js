@@ -11,8 +11,10 @@ import { useUser } from './hooks/useUser';
 const sortPosts = (posts) => {
     let sortPosts = JSON.parse(JSON.stringify(posts));
     sortPosts.sort((postA, postB) => {
-        if (postA.rating.push.total !== postB.rating.push.total)
-            return postA.rating.push.total > postB.rating.push.total ? 1 : -1;
+        const valA = postA.rating.push.total - postA.rating.down.total;
+        const valB = postB.rating.push.total - postB.rating.down.total;
+        if (valA !== valB)
+            return valA < valB ? 1 : -1;
         else
             return parseInt(postA.timestamp) < parseInt(postB.timestamp) ? 1 : -1;
     })
