@@ -26,6 +26,11 @@
     yarn server
     ```
 
+## Demo
+https://github.com/user-attachments/assets/6d4fe257-f06e-41ad-ada3-882d07a23694
+
+<br>
+
 ## User Guide
 1. Registration
     - Click the `SIGN UP` button at the top right corner of the web page to sign up for a new account
