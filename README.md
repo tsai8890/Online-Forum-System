@@ -1,5 +1,9 @@
 # Web Programming Final Project
 
+https://github.com/user-attachments/assets/6d4fe257-f06e-41ad-ada3-882d07a23694
+
+<br>
+
 ## Pre-requisites
 1. Install the required packages
     > Under the root directory
@@ -26,10 +30,6 @@
     yarn server
     ```
 
-## Demo
-https://github.com/user-attachments/assets/6d4fe257-f06e-41ad-ada3-882d07a23694
-
-<br>
 
 ## User Guide
 1. Registration
